@@ -5,11 +5,63 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  name            String
+  email           String            @unique
+  prefecture      String
+  password_hash   String
+  reservations    Reservation[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+}
+
+model Hotel {
+  id              Int               @id @default(autoincrement())
+  name            String
+  prefecture      String
+  description     String?
+  rooms           Room[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+}
+
+model Room {
+  id              Int               @id @default(autoincrement())
+  hotel_id        Int
+  name            String
+  capacity        Int
+  price_per_night Int
+  hotel           Hotel             @relation(fields: [hotel_id], references: [id])
+  reservations    Reservation[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt  
+}
+
+enum ReservationStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+model Reservation {
+  id              Int               @id @default(autoincrement())
+  user_id         Int
+  room_id         Int
+  guest_count     Int
+  check_in        DateTime
+  check_out       DateTime
+  total_price     Int
+  status          ReservationStatus @default(CONFIRMED)
+  user            User              @relation(fields: [user_id], references: [id])
+  room            Room              @relation(fields: [room_id], references: [id])
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
 }
