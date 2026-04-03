@@ -29,6 +29,9 @@ model Hotel {
   name            String
   prefecture      String
   description     String?
+  cover_image_url String?
+  address_line    String?
+  rating          Int?
   rooms           Room[]
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
@@ -60,6 +63,7 @@ model Reservation {
   check_out       DateTime
   total_price     Int
   status          ReservationStatus @default(CONFIRMED)
+  cancelled_at    DateTime?
   user            User              @relation(fields: [user_id], references: [id])
   room            Room              @relation(fields: [room_id], references: [id])
   created_at      DateTime          @default(now())
