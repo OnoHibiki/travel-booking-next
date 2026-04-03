@@ -19,3 +19,4 @@ out/
 
 # typescript
 *.tsbuildinfo
+/app/generated/prisma
