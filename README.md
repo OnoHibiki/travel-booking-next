@@ -25,7 +25,6 @@ A full-stack travel booking web application.
 This project follows a simple Git workflow using feature branches.
 - `main`: stable branch
 - `develop`: integration branch for development
-- `feature/*`: feature-specific branches
 
 ## Project status
  - Started: 2026/03/31
