@@ -1,0 +1,40 @@
+### register
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "est@example.com",
+  "password": "password123",
+  "prefecture": "大阪府"
+}
+### register（未入力エラー）
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "",
+  "password": "",
+  "prefecture": ""
+}
+### register（メール形式エラー）
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "testexample.com",
+  "password": "password123",
+  "prefecture": "大阪府"
+}
+### register（重複エラー）
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "prefecture": "大阪府"
+}
