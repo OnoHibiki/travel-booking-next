@@ -1,31 +1,47 @@
 ### =========================
-### HOTELS API TEST
+### GET /hotels
 ### =========================
 
 ### 1. 全件取得（prefectureなし）
 GET http://localhost:3000/api/hotels
 
-###
-
 ### 2. 大阪府で絞り込み
 GET http://localhost:3000/api/hotels?prefecture=大阪府
-
-###
 
 ### 3. 東京都で絞り込み
 GET http://localhost:3000/api/hotels?prefecture=東京都
 
-###
-
 ### 4. 存在しない都道府県（0件になるはず）
 GET http://localhost:3000/api/hotels?prefecture=北海道
-
-###
 
 ### 5. 空文字（全件になるか確認）
 GET http://localhost:3000/api/hotels?prefecture=
 
-###
-
 ### 6. パラメータミス（無視されて全件になるはず）
 GET http://localhost:3000/api/hotels?prefectures=大阪府
+
+### =========================
+### GET /hotels/:hotelId
+### =========================
+
+### 7. 正常（存在するID）
+GET http://localhost:3000/api/hotels/1
+
+### 8. 存在しないID（404になるはず）
+GET http://localhost:3000/api/hotels/999
+
+### 9. 不正ID（400になるはず）
+GET http://localhost:3000/api/hotels/abc
+
+### =========================
+### GET /hotels/:hotelId/rooms
+### =========================
+
+### 10. 正常（ホテル1の部屋）
+GET http://localhost:3000/api/hotels/1/rooms
+
+### 11. 存在しないホテル（404）
+GET http://localhost:3000/api/hotels/999/rooms
+
+### 12. 不正ID（400）
+GET http://localhost:3000/api/hotels/abc/rooms
