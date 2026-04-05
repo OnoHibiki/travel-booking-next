@@ -1,4 +1,4 @@
-### register
+### ------------------register----------------------
 POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
@@ -37,4 +37,52 @@ Content-Type: application/json
   "email": "test@example.com",
   "password": "password123",
   "prefecture": "大阪府"
+}
+
+
+
+### ------------------login----------------------
+### login (正常)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### login（未入力）
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "",
+  "password": ""
+}
+
+### login（メール形式エラー）
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "testexample.com",
+  "password": "password123"
+}
+
+### login（ユーザー存在しない）
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "nouser@example.com",
+  "password": "password123"
+}
+
+### login（パスワード違い）
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "wrongpassword"
 }
