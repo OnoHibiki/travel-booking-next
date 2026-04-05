@@ -16,8 +16,8 @@
 ## Endpoints
 
 ### Public (認証不要)
-- `GET /hotels?prefecture=大阪府`
-  - Description: List hotels (prefecture exact match)　- ホテル検索（都道府県完全一致）
+- `GET /hotels?prefecture=大阪府&checkIn=YYYY-MM-DD&checkOut=YYYY-MM-DD`
+  - Description: Search available hotels by prefecture and date range - 空室ホテル検索
   - Auth: Not required
 
 - `GET /hotels/:hotelId`
