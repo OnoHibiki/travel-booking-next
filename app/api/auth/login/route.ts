@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient()
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
 
         // 入力値チェック
         if (!email || !password) {
-            return NextResponse.json({ error: '未入力の項目があります'}, { status: 400})
+            return NextResponse.json({ error: '未入力の項目があります' }, { status: 400 })
         }
         // email形式チェック
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
         // ユーザが存在しない場合
         if (!user) {
             return NextResponse.json(
-                { error: 'メールアドレスまたはパスワードが正しくありません'},{ status: 401 }
+                { error: 'メールアドレスまたはパスワードが正しくありません' }, { status: 401 }
             )
         }
         
@@ -35,16 +36,34 @@ export async function POST(req: Request) {
         // パスワードが合致しない場合
         if(!isValidPassword) {
             return NextResponse.json(
-                { error: 'メールアドレスまたはパスワードが正しくありません'},{ status: 401 }
+                { error: 'メールアドレスまたはパスワードが正しくありません '}, { status: 401 }
             )
         }
 
-        // ログイン後、パスワードハッシュ以外をレスポンス
-        const { password_hash, ...userWithoutPassword } = user
+        // JWTが設定されているか確認
+        const secret = process.env.JWT_SECRET
+        if(!secret) {
+            return NextResponse.json(
+                { error: 'JWT_SECRETが設定されていません。envファイルを確認してください' }, { status: 500 }
+            )
+        }
 
-        return NextResponse.json(userWithoutPassword, { status: 200})
+        // JWTの保持は1時間
+        const token = jwt.sign(
+            { userId: user.id, email: user.email }, secret, { expiresIn: '1h' }
+        )
+
+        // ログイン成功時、JWTとパスワードハッシュを除いたユーザー情報を返す
+        const { password_hash, ...userWithoutPassword } = user
+        return NextResponse.json({
+            message: 'ログインに成功しました',
+            token,
+            user: userWithoutPassword,
+            },
+            { status: 200 }
+        )
     } catch (error) {
         console.error(error)
-        return NextResponse.json({ error: '予期せぬエラーです'}, {status: 500})
+        return NextResponse.json({ error: '予期せぬエラーです' }, {status: 500})
     }
 }
