@@ -1,0 +1,31 @@
+### =========================
+### HOTELS API TEST
+### =========================
+
+### 1. 全件取得（prefectureなし）
+GET http://localhost:3000/api/hotels
+
+###
+
+### 2. 大阪府で絞り込み
+GET http://localhost:3000/api/hotels?prefecture=大阪府
+
+###
+
+### 3. 東京都で絞り込み
+GET http://localhost:3000/api/hotels?prefecture=東京都
+
+###
+
+### 4. 存在しない都道府県（0件になるはず）
+GET http://localhost:3000/api/hotels?prefecture=北海道
+
+###
+
+### 5. 空文字（全件になるか確認）
+GET http://localhost:3000/api/hotels?prefecture=
+
+###
+
+### 6. パラメータミス（無視されて全件になるはず）
+GET http://localhost:3000/api/hotels?prefectures=大阪府
