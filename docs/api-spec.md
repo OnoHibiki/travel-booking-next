@@ -1,73 +1,57 @@
-# API Spec - Travel Booking Site （API仕様書）
-
-## Overview (前提ルール)
-- Base URL : `/api`
-- Auth : JWT (Bearer)
-  - Header : `Authorization: Bearer <token>`
-- Date format : `YYYY-MM-DD`
-
-## Search Rule (検索ルール)
-<!-- 完全一致が必要 -->
-- `prefecture` filter is **exact match** (e.g. `大阪府`)
-- `CheckIn and CheckOut` 
-
-
-
 ## Endpoints
 
-### Public (認証不要)
-- `GET /hotels?prefecture=大阪府&checkIn=YYYY-MM-DD&checkOut=YYYY-MM-DD`
-  - Description: Search available hotels by prefecture and date range - 空室ホテル検索
-  - Auth: Not required
+### Hotels / Rooms
+- `GET /hotels?prefecture=大阪府`
+  - 説明: 都道府県でホテル一覧を取得
+  - 認証: 不要
 
-- `GET /hotels/:hotelId`
-  - Description: Get hotel detail - ホテル情報取得（ID検索）
-  - Auth: Not required
+ - `GET /hotels?prefecture=大阪府&checkIn=YYYY-MM-DD&checkOut=YYYY-MM-DD`
+  - 説明: 都道府県と日付で空室ホテルを検索
+  - 認証: 不要
 
-- `GET /hotels/:hotelId/rooms`
-  - Description: Get rooms for a specific hotel - 特定のホテルの部屋情報取得
-  - Auth: Not required
+ - `GET /hotels/:hotelId`
+  - 説明: ホテル情報をIDで取得
+  - 認証: 不要
 
-- `POST /auth/register`
-  - Description: Create a new user account - ユーザ新規登録
-  - Auth: Not required
+ - `GET /hotels/:hotelId/rooms`
+  - 説明: 指定したホテルの部屋情報を取得
+  - 認証: 不要
 
-- `POST /auth/login`
-  - Description: Login and receive JWT token - ログインしてJWTを取得
-  - Auth: Not required
+### Auth
+ - `POST /auth/register`
+  - 説明: ユーザを新規登録
+  - 認証: 不要
 
+ - `POST /auth/login`
+  - 説明: ログインしてJWTを取得
+  - 認証: 不要
 
-### Auth Required (認証必須)
+ - `PATCH /auth/password`
+  - 説明: パスワードを変更
+  - 認証: 必要
 
-#### Auth (認証)
-- `PATCH /auth/password`
-  - Description: Change current user password - パスワード変更
-  - Auth: Required
+### Me
+ - `GET /me`
+  - 説明: ユーザ情報を取得
+  - 認証: 必要
 
+ - `PATCH /me`
+  - 説明: プロフィール（name, email, prefecture）を更新
+  - 認証: 必要
 
-#### Me (プロフィール)
-- `GET /me`
-  - Description: Fetch current user profile - ユーザ情報取得
-  - Auth: Required
+### Reservations
+ - `POST /reservations`
+  - 説明: 予約を作成
+  - 認証: 必要
 
-- `PATCH /me`
-  - Description: Update current user profile (name, email, prefecture) - プロフィール更新
-  - Auth: Required
+ - `GET /me/reservations`
+  - 説明: 自分の予約一覧を取得
+  - 認証: 必要
 
+ - `GET /reservations/:reservationId`
+  - 説明: 予約詳細を取得
+  - 認証: 必要
 
-#### Reservations (予約)
-- `POST /reservations`
-  - Description: Create a new reservation - 新規予約
-  - Auth: Required
-
-- `GET /me/reservations`
-  - Description: Fetch current user's reservations - 自分の予約一覧
-  - Auth: Required
-
-- `GET /reservations/:reservationId`
-  - Description: Fetch reservation detail - 予約詳細
-  - Auth: Required
-
-- `PATCH /reservations/:reservationId/cancel`
-  - Description: Cancel a reservation - 予約キャンセル
-  - Auth: Required
+ - `PATCH /reservations/:reservationId/cancel`
+  - 説明: 予約をキャンセル
+  - 認証: 必要
