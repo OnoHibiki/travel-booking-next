@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient()
@@ -20,8 +20,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
         }
 
-
-        // すでに登録済みのユーザか確認し、登録済みであれば排除
+        // すでに登録済みのemailか確認し、登録済みであれば排除
         const  existingUser = await prisma.user.findUnique({
             where: { email },
         })
