@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient()
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         const body = await req.json()
         const { name, email, password, prefecture } = body
 
-        //入力値チェック
+        // 入力値チェック
         if (!name || !email || !prefecture || !password) {
             return NextResponse.json({ error: '未入力の項目があります'}, { status: 400})
         }
@@ -20,8 +20,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
         }
 
-
-        //すでに登録済みのユーザか確認し、登録済みであれば排除
+        // すでに登録済みのemailか確認し、登録済みであれば排除
         const  existingUser = await prisma.user.findUnique({
             where: { email },
         })
@@ -29,10 +28,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: '既に登録されているメールアドレスです'}, { status: 409})
         }
 
-        //パスワードハッシュ化
+        // パスワードハッシュ化
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        //ユーザ登録
+        // ユーザ登録
         const user = await prisma.user.create({
             data: {
                 name,
@@ -42,7 +41,7 @@ export async function POST(req: Request) {
             },
         })
 
-        //ユーザ登録後、パスワードハッシュ以外をレスポンス
+        // ユーザ登録後、パスワードハッシュ以外をレスポンス
         const { password_hash, ...userWithoutPassword } = user
         return NextResponse.json(userWithoutPassword, { status: 201})
     } catch (error) {
