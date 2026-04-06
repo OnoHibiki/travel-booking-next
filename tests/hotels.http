@@ -57,7 +57,7 @@ GET http://localhost:3000/api/hotels?prefecture=大阪府&checkOut=2026-05-12
 ### =========================
 
 ### 15. 正常（存在するID）
-GET http://localhost:3000/api/hotels/5
+GET http://localhost:3000/api/hotels/1
 
 ### 16. 存在しないID（404になるはず）
 GET http://localhost:3000/api/hotels/999
@@ -69,8 +69,8 @@ GET http://localhost:3000/api/hotels/abc
 ### GET /hotels/:hotelId/rooms
 ### =========================
 
-### 18. 正常（ホテル5の部屋）
-GET http://localhost:3000/api/hotels/5/rooms
+### 18. 正常（ホテル1の部屋）
+GET http://localhost:3000/api/hotels/1/rooms
 
 ### 19. 存在しないホテル（404）
 GET http://localhost:3000/api/hotels/999/rooms
