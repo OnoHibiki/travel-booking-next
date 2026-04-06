@@ -23,6 +23,7 @@ async function main() {
     const osakaHotel = await prisma.hotel.create({
         include: { rooms: true },
         data: {
+            id: 1, // テスト用のため固定ID
             name: 'Osaka Hotel',
             prefecture: '大阪府',
             description: '大阪といえばここやねん',
@@ -50,6 +51,7 @@ async function main() {
     const tokyoHotel = await prisma.hotel.create({
         include: { rooms: true },
         data: {
+            id: 2,
             name: 'Tokyo Hotel',
             prefecture: '東京都',
             description: '東京といえばここですよ',
