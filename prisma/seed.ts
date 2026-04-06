@@ -10,7 +10,7 @@ async function main() {
     await prisma.user.deleteMany()
 
     //テストユーザ
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             name: 'Hibiki Ono',
             prefecture: '大阪府',
@@ -20,7 +20,8 @@ async function main() {
     })
 
     //テストホテル1
-    await prisma.hotel.create({
+    const osakaHotel = await prisma.hotel.create({
+        include: { rooms: true },
         data: {
             name: 'Osaka Hotel',
             prefecture: '大阪府',
@@ -46,7 +47,8 @@ async function main() {
     })
 
     //テストホテル2
-    await prisma.hotel.create({
+    const tokyoHotel = await prisma.hotel.create({
+        include: { rooms: true },
         data: {
             name: 'Tokyo Hotel',
             prefecture: '東京都',
@@ -70,6 +72,31 @@ async function main() {
             },
         },
     })
+
+    // 予約データ（空室/埋まりのテスト用）
+    await prisma.reservation.create({
+        data: {
+            user_id: user.id,
+            room_id: osakaHotel.rooms[0].id, // Osaka Single Room
+            guest_count: 1,
+            check_in: new Date("2026-05-10"),
+            check_out: new Date("2026-05-12"),
+            total_price: 24000,
+            status: "CONFIRMED",
+        },
+    })
+
+    await prisma.reservation.create({
+        data: {
+            user_id: user.id,
+            room_id: tokyoHotel.rooms[1].id, // Tokyo Double Room
+            guest_count: 2,
+            check_in: new Date("2026-05-11"),
+            check_out: new Date("2026-05-13"),
+            total_price: 80000,
+            status: "CONFIRMED",
+        },
+    })
 }
 
 main()
@@ -83,5 +110,4 @@ main()
     .finally(async () => {
         await prisma.$disconnect()
     })
-    
     
