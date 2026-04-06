@@ -5,6 +5,10 @@
 ### 1. 全件取得（prefectureなし）
 GET http://localhost:3000/api/hotels
 
+### =========================
+### GET /hotels?prefecture
+### =========================
+
 ### 2. 大阪府で絞り込み
 GET http://localhost:3000/api/hotels?prefecture=大阪府
 
@@ -21,27 +25,55 @@ GET http://localhost:3000/api/hotels?prefecture=
 GET http://localhost:3000/api/hotels?prefectures=大阪府
 
 ### =========================
+### GET /hotels?prefecture=...&checkIn=...&checkOut=...
+### =========================
+
+### 7. 大阪府の空室ホテル検索（正常）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkIn=2026-05-10&checkOut=2026-05-12
+
+### 8. 東京都の空室ホテル検索（正常）
+GET http://localhost:3000/api/hotels?prefecture=東京都&checkIn=2026-05-10&checkOut=2026-05-12
+
+### 9. 都道府県指定なしの空室ホテル検索（全件対象）
+GET http://localhost:3000/api/hotels?checkIn=2026-05-10&checkOut=2026-05-12
+
+### 10. checkInがcheckOut以降（日付不正・400になるはず）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkIn=2026-05-12&checkOut=2026-05-10
+
+### 11. checkInの形式不正（400になるはず）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkIn=invalid-date&checkOut=2026-05-12
+
+### 12. checkOutの形式不正（400になるはず）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkIn=2026-05-10&checkOut=invalid-date
+
+### 13. checkInのみ指定（チェックインとアウトは両方指定してとなるはず）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkIn=2026-05-10
+
+### 14. checkOutのみ指定（チェックインとアウトは両方指定してとなるはず）
+GET http://localhost:3000/api/hotels?prefecture=大阪府&checkOut=2026-05-12
+
+### =========================
 ### GET /hotels/:hotelId
 ### =========================
 
-### 7. 正常（存在するID）
-GET http://localhost:3000/api/hotels/1
+### 15. 正常（存在するID）
+GET http://localhost:3000/api/hotels/5
 
-### 8. 存在しないID（404になるはず）
+### 16. 存在しないID（404になるはず）
 GET http://localhost:3000/api/hotels/999
 
-### 9. 不正ID（400になるはず）
+### 17. 不正ID（400になるはず）
 GET http://localhost:3000/api/hotels/abc
 
 ### =========================
 ### GET /hotels/:hotelId/rooms
 ### =========================
 
-### 10. 正常（ホテル1の部屋）
-GET http://localhost:3000/api/hotels/1/rooms
+### 18. 正常（ホテル5の部屋）
+GET http://localhost:3000/api/hotels/5/rooms
 
-### 11. 存在しないホテル（404）
+### 19. 存在しないホテル（404）
 GET http://localhost:3000/api/hotels/999/rooms
 
-### 12. 不正ID（400）
+### 20. 不正ID（400）
 GET http://localhost:3000/api/hotels/abc/rooms
