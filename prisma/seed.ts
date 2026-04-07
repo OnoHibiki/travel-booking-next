@@ -99,6 +99,20 @@ async function main() {
             status: "CONFIRMED",
         },
     })
+    
+    // キャンセル済み予約（空室判定テスト用）
+    await prisma.reservation.create({
+        data: {
+            user_id: user.id,
+            room_id: osakaHotel.rooms[0].id, // Osaka Single Room
+            guest_count: 1,
+            check_in: new Date("2026-06-01"),
+            check_out: new Date("2026-06-03"),
+            total_price: 24000,
+            status: "CANCELLED",
+        },
+    })
+
 }
 
 main()
