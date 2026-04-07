@@ -77,3 +77,33 @@ GET http://localhost:3000/api/hotels/999/rooms
 
 ### 20. 不正ID（400）
 GET http://localhost:3000/api/hotels/abc/rooms
+
+### 21. 空室判定あり（正常・大阪府ホテル1）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-10&checkOut=2026-05-12
+
+### 22. 空室判定あり（予約が被るケース）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-11&checkOut=2026-05-13
+
+### 23. 空室判定なし（日付渡さない。is_availableはnullになる想定）
+GET http://localhost:3000/api/hotels/1/rooms
+
+### 24. checkInのみ指定（400になるはず）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-10
+
+### 25. checkOutのみ指定（400になるはず）
+GET http://localhost:3000/api/hotels/1/rooms?checkOut=2026-05-12
+
+### 26. 日付逆転（400になるはず）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-12&checkOut=2026-05-10
+
+### 27. 不正日付（400になるはず）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=invalid&checkOut=2026-05-12
+
+### 28. CANCELLEDが存在 → 空室扱いになるはず
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-06-01&checkOut=2026-06-03
+
+### 29. CONFIRMEDが存在 → 満室扱いになるはず
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-10&checkOut=2026-05-12
+
+### 30. CANCELLEDとCONFIRMED混在 → 部屋ごとに空室判定（CONFIRMEDがある部屋のみ不可）
+GET http://localhost:3000/api/hotels/1/rooms?checkIn=2026-05-11&checkOut=2026-05-13
