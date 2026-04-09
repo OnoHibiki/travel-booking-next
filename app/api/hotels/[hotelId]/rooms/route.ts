@@ -13,7 +13,7 @@ export async function GET(
         const parseHotelId = Number(hotelId)
 
         // hotelIdが数値ではない場合
-        if (Number.isNaN(parseHotelId)) {
+        if(Number.isNaN(parseHotelId)) {
             return NextResponse.json(
                 { error: 'hotelIdは数値で指定してください' }, { status: 400 }
             )
@@ -25,7 +25,7 @@ export async function GET(
         const checkOut = searchParams.get('checkOut');
 
         // チェックイン/アウト片方だけの指定の場合は、エラー
-        if ((checkIn && !checkOut) || (!checkIn && checkOut)) {
+        if((checkIn && !checkOut) || (!checkIn && checkOut)) {
             return NextResponse.json(
                 { error: 'checkInとcheckOutは両方指定してください' }, { status: 400 }
             )
@@ -35,7 +35,7 @@ export async function GET(
         const checkInDate = checkIn ? new Date(checkIn) : null;
         const checkOutDate = checkOut ? new Date(checkOut) : null;
 
-        if (
+        if(
             (checkIn && Number.isNaN(checkInDate!.getTime())) ||
             (checkOut && Number.isNaN(checkOutDate!.getTime()))
         ) {
@@ -44,7 +44,7 @@ export async function GET(
             )
         }
 
-        if (checkInDate && checkOutDate && checkInDate >= checkOutDate) {
+        if(checkInDate && checkOutDate && checkInDate >= checkOutDate) {
             return NextResponse.json(
                 { error: 'チェックインはチェックアウトより前の日付を指定してください'}, { status: 400 }
             )
@@ -56,7 +56,7 @@ export async function GET(
         })
 
         // ホテルが存在しなかった場合
-        if (!hotel) {
+        if(!hotel) {
             return NextResponse.json(
                 { error: 'ホテルが見つかりません'}, { status: 404 }
             )
@@ -84,7 +84,7 @@ export async function GET(
 
         const roomsWithAvailability = rooms.map((room) => {
             const { reservations, ...roomData } = room; //　予約情報詳細を返す必要はない
-            if (!checkIn || !checkOut) {
+            if(!checkIn || !checkOut) {
                 return {
                     ...roomData,
                     is_available: null, //これが重要。予約ができるかどうかだけを返せばいい

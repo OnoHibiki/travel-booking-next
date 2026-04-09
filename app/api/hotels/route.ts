@@ -12,9 +12,9 @@ export async function GET(req: Request) {
         const checkOut = searchParams.get('checkOut');
 
         // チェックインとチェックアウトが指定された場合の検索のみ実行
-        if ( checkIn || checkOut ) {
+        if(checkIn || checkOut) {
             //　どちらか片方だけ指定していた場合は、エラーに。
-            if( !checkIn || !checkOut ) {
+            if(!checkIn || !checkOut) {
                 return NextResponse.json(
                     { error: 'チェックイン日とチェックアウト日は両方指定してください'}, { status: 400 }
                 )
@@ -23,13 +23,13 @@ export async function GET(req: Request) {
             const parsedCheckIn = new Date(checkIn);
             const parsedCheckOut = new Date(checkOut);
             
-            if (Number.isNaN(parsedCheckIn.getTime()) || Number.isNaN(parsedCheckOut.getTime())) {
+            if(Number.isNaN(parsedCheckIn.getTime()) || Number.isNaN(parsedCheckOut.getTime())) {
                 return NextResponse.json(
                     { error: '日付の形式が正しくありません' }, { status: 400 }
                 );
             }
 
-            if (parsedCheckIn >= parsedCheckOut) {
+            if(parsedCheckIn >= parsedCheckOut) {
                 return NextResponse.json(
                     { error: 'チェックイン日はチェックアウト日より前の日付を指定してください' }, { status: 400 }
                 );
