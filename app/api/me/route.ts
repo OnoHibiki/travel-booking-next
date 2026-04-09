@@ -41,7 +41,7 @@ export async function GET(req: Request) {
             where: { id: decoded.userId },
         })
         //　userが存在しない場合
-        if (!user) {
+        if(!user) {
             return NextResponse.json(
                 { error: 'ユーザが存在しません' }, { status: 404 }
             )
@@ -66,7 +66,7 @@ export async function PATCH(req: Request) {
         const authHeader = req.headers.get('authorization')
 
         // Authorizationヘッダーが空、もしくは不適切な場合
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        if(!authHeader || !authHeader.startsWith('Bearer ')) {
             return NextResponse.json(
                 { error: '認証に失敗しました'} , { status: 401 }
             )
@@ -77,7 +77,7 @@ export async function PATCH(req: Request) {
 
         // JWT存在確認
         const secret = process.env.JWT_SECRET
-        if (!secret) {
+        if(!secret) {
             return NextResponse.json(
                 { error: 'JWT_SECRETが設定されていません。envファイルを確認してください' }, { status: 500 }
             )
@@ -93,12 +93,12 @@ export async function PATCH(req: Request) {
         // 更新データ作成
         const updateData: Prisma.UserUpdateInput = {}
 
-        if (name !== undefined)  updateData.name = name
+        if(name !== undefined)  updateData.name = name
 
-        if (email !== undefined) {
+        if(email !== undefined) {
             // email形式チェック
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            if (!emailRegex.test(email)) {
+            if(!emailRegex.test(email)) {
                 return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
             }
             // すでに登録済みのemailか確認し、登録済みであれば排除
@@ -110,18 +110,18 @@ export async function PATCH(req: Request) {
                     }
                 },
             })
-            if (existingUser) {
+            if(existingUser) {
                 return NextResponse.json({ error: '既に登録されているメールアドレスです'}, { status: 409})
             }
             updateData.email = email
         } 
 
-        if (prefecture !== undefined) updateData.prefecture = prefecture
+        if(prefecture !== undefined) updateData.prefecture = prefecture
 
 
 
         // 空チェック
-        if (Object.keys(updateData).length === 0) {
+        if(Object.keys(updateData).length === 0) {
             return NextResponse.json(
                 { error: '更新するデータがありません'}, { status: 400 }
             )

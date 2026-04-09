@@ -1,0 +1,41 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksImVtYWlsIjoiZG91YmxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc1NzQ0NjQ1LCJleHAiOjE3NzU3NDgyNDV9.iVkWvfSW9oDxPGQL_iJ3zopRzZ3FxhCx45Qdc0FvOVM
+
+### =========================
+### POST /reservations
+### =========================
+
+### 1. 正常
+POST http://localhost:3000/api/reservations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "room_id": 18,
+  "check_in": "2026-05-29",
+  "check_out": "2026-05-30",
+  "guest_count": 2
+}
+
+### 2. 重複予約（409）
+POST http://localhost:3000/api/reservations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "room_id": 17,
+  "check_in": "2026-05-10",
+  "check_out": "2026-05-12",
+  "guest_count": 1
+}
+
+### 3. 定員超過（400）
+POST http://localhost:3000/api/reservations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "room_id": 17,
+  "check_in": "2026-05-20",
+  "check_out": "2026-05-22",
+  "guest_count": 3
+}

@@ -13,7 +13,7 @@ export async function GET(
         const parseHotelId = Number(hotelId)
 
         // hotelIdが数値ではない場合
-        if (Number.isNaN(parseHotelId)) {
+        if(Number.isNaN(parseHotelId)) {
             return NextResponse.json(
                 { error: 'hotelIdは数値で指定してください' }, { status: 400 }
             )
@@ -24,7 +24,7 @@ export async function GET(
         })
 
         // ホテルが存在しなかった場合
-        if (!hotel) {
+        if(!hotel) {
             return NextResponse.json(
                 { error: 'ホテルが見つかりません'}, { status: 404 }
             )

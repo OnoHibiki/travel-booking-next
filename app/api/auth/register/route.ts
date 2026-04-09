@@ -11,12 +11,12 @@ export async function POST(req: Request) {
         const { name, email, password, prefecture } = body
 
         // 入力値チェック
-        if (!name || !email || !prefecture || !password) {
+        if(!name || !email || !prefecture || !password) {
             return NextResponse.json({ error: '未入力の項目があります'}, { status: 400})
         }
         // email形式チェック
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
+        if(!emailRegex.test(email)) {
             return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
         }
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         const  existingUser = await prisma.user.findUnique({
             where: { email },
         })
-        if (existingUser) {
+        if(existingUser) {
             return NextResponse.json({ error: '既に登録されているメールアドレスです'}, { status: 409})
         }
 

@@ -11,12 +11,12 @@ export async function POST(req: Request) {
         const { email, password } = body
 
         // 入力値チェック
-        if (!email || !password) {
+        if(!email || !password) {
             return NextResponse.json({ error: '未入力の項目があります' }, { status: 400 })
         }
         // email形式チェック
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
+        if(!emailRegex.test(email)) {
             return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
         }
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             where: { email },
         })
         // ユーザが存在しない場合
-        if (!user) {
+        if(!user) {
             return NextResponse.json(
                 { error: 'メールアドレスまたはパスワードが正しくありません' }, { status: 401 }
             )
