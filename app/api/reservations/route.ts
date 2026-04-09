@@ -112,8 +112,8 @@ export async function POST(req: Request){
             const reservation = await tx.reservation.create({
                 data: {
                     user_id: decoded.userId,
-                    room_id: Number(room_id),
-                    guest_count: Number(guest_count),
+                    room_id: parsedRoomId,
+                    guest_count: parsedGuestCount,
                     check_in: checkInDate,
                     check_out: checkOutDate,
                     total_price,
@@ -150,7 +150,7 @@ export async function POST(req: Request){
         }
 
         return NextResponse.json(
-            { error: '予約作成に失敗しました '}, { status: 500 }
+            { error: '予約作成に失敗しました'}, { status: 500 }
         );
     }
 }

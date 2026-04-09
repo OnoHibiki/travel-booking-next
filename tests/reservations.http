@@ -10,7 +10,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "room_id": 18,
+  "room_id": 22,
   "check_in": "2026-05-29",
   "check_out": "2026-05-30",
   "guest_count": 2
@@ -22,7 +22,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "room_id": 17,
+  "room_id": 21,
   "check_in": "2026-05-10",
   "check_out": "2026-05-12",
   "guest_count": 1
@@ -34,7 +34,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "room_id": 17,
+  "room_id": 24,
   "check_in": "2026-05-20",
   "check_out": "2026-05-22",
   "guest_count": 3
