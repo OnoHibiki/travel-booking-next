@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImRvdWJsZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTk3NDk5MCwiZXhwIjoxNzc1OTc4NTkwfQ.agtmXLX0Zj3Bne9VRwFKVHnygFrSQ69DgxiFxwNjsK8
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImRvdWJsZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTk3OTg5NSwiZXhwIjoxNzc1OTgzNDk1fQ.QTNvus3jWJRyG3keHvIDu8CqWCM97ylY0vOzkgxNpCA
 
 ### =========================
 ### GET /me（正常）
