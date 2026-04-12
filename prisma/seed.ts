@@ -7,6 +7,7 @@ async function main() {
     await prisma.reservation.deleteMany()
     await prisma.room.deleteMany()
     await prisma.hotel.deleteMany()
+    await prisma.user.deleteMany()
 
     //テストユーザ
     const user = await prisma.user.upsert({
