@@ -3,7 +3,7 @@
 ### POST /reservations(予約登録)
 ### =========================
 
-### 1. 正常
+### 正常
 POST http://localhost:3000/api/reservations
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -15,7 +15,7 @@ Authorization: Bearer {{token}}
   "guest_count": 2
 }
 
-### 2. 重複予約（409）
+### 重複予約（409）
 POST http://localhost:3000/api/reservations
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -27,7 +27,7 @@ Authorization: Bearer {{token}}
   "guest_count": 1
 }
 
-### 3. 定員超過（400）
+### 定員超過（400）
 POST http://localhost:3000/api/reservations
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -40,12 +40,30 @@ Authorization: Bearer {{token}}
 }
 
 ### =========================
+### GET /reservatoins (予約一覧取得)
+### =========================
+### 予約一覧取得
+GET http://localhost:3000/api/reservations
+Authorization: Bearer {{token}}
+
+### =========================
+### GET /reservatoins/[reservationId] (予約詳細取得)
+### =========================
+### 予約詳細取得
+GET http://localhost:3000/api/reservations/58
+Authorization: Bearer {{token}}
+
+### =========================
 ### PATCH /reservations/[reservationId]/cancel(予約キャンセル)
 ### =========================
-### 4. 予約キャンセル
+### 予約キャンセル
 PATCH http://localhost:3000/api/reservations/58/cancel
 Authorization: Bearer {{token}}
 
-### 5. すでにキャンセル済み（400）
+### すでにキャンセル済み（400）
 PATCH http://localhost:3000/api/reservations/58/cancel
+Authorization: Bearer {{token}}
+
+### 文字列を渡す(400)
+PATCH http://localhost:3000/api/reservations/a/cancel
 Authorization: Bearer {{token}}

@@ -14,13 +14,6 @@ GET http://localhost:3000/api/me
 Authorization: Bearer invalid-token
 
 ### =========================
-### GET /me/reservatoins (予約一覧取得)
-### =========================
-GET http://localhost:3000/api/me/reservations
-Authorization: Bearer {{token}}
-
-
-### =========================
 ### PATCH /me（正常）
 ### =========================
 PATCH http://localhost:3000/api/me
