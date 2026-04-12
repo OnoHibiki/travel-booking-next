@@ -1,136 +1,62 @@
 import { PrismaClient } from "@prisma/client";
+import { fakerJA as faker } from '@faker-js/faker';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
+
+// 47都道府県のリスト
+const prefectures = [
+  "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
+  "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+  "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県",
+  "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県",
+  "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県",
+  "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県",
+  "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"
+];
 
 async function main() {
-    // リセット
-    await prisma.reservation.deleteMany()
-    await prisma.room.deleteMany()
-    await prisma.hotel.deleteMany()
-    await prisma.user.deleteMany()
+  // 1. 既存データの削除
+  await prisma.reservation.deleteMany();
+  await prisma.room.deleteMany();
+  await prisma.hotel.deleteMany();
+  await prisma.user.deleteMany();
 
-    //テストユーザ
-    const user = await prisma.user.upsert({
-        where: { email: 'test@example.com' },
-        update: {}, // すでにある場合は何もしない
-        create: {
-            id: 1,  // テスト用のため固定ID
-            name: 'Hibiki Ono',
-            prefecture: '大阪府',
-            password_hash: 'hashpassword',
-            email: 'test@example.com',
-        },
-    })
+  // 2. テストユーザー作成
+  await prisma.user.create({
+    data: {
+      name: 'Hibiki Ono',
+      email: 'test@example.com',
+      prefecture: '大阪府',
+      password_hash: 'hashpassword',
+    },
+  });
 
-    //テストホテル1
-    const osakaHotel = await prisma.hotel.create({
-        include: { rooms: true },
-        data: {
-            id: 1, // テスト用のため固定ID
-            name: 'Osaka Hotel',
-            prefecture: '大阪府',
-            description: '大阪といえばここやねん',
-            cover_image_url: '/images/osaka-hotel.jpg',
-            address_line: '大阪府大阪市大阪町大阪0001',
-            rating: 4,
-            rooms: {
-                create: [
-                    {
-                        id: 1,
-                        name: 'Single Room',
-                        capacity: 1,
-                        price_per_night: 12000,
-                    },
-                    {
-                        id: 2,
-                        name: 'Double Room',
-                        capacity: 2,
-                        price_per_night: 20000,
-                    },
-                ],
-            },
-        },
-    })
+  console.log("全県ホテルの生成を開始します...");
 
-    //テストホテル2
-    const tokyoHotel = await prisma.hotel.create({
-        include: { rooms: true },
-        data: {
-            id: 2,
-            name: 'Tokyo Hotel',
-            prefecture: '東京都',
-            description: '東京といえばここですよ',
-            cover_image_url: '/images/tokyo-hotel.jpg',
-            address_line: '東京都東京区東京0002',
-            rating: 3,
-            rooms: {
-                create: [
-                    {
-                        id: 3,
-                        name: 'Single Room',
-                        capacity: 1,
-                        price_per_night: 22000,
-                    },
-                    {
-                        id: 4,
-                        name: 'Double Room',
-                        capacity: 2,
-                        price_per_night: 40000,
-                    },
-                ],
-            },
+  // 3. 都道府県リストをループして、各県に1軒ずつ作成
+  for (const pref of prefectures) {
+    await prisma.hotel.create({
+      data: {
+        name: `${pref}${faker.company.name()} ホテル`, // 「東京都〇〇商事 ホテル」のようになる
+        prefecture: pref, // ここで確実に全県指定
+        address_line: faker.location.streetAddress(),
+        description: `${pref}の観光に最適なロケーションです。${faker.lorem.sentence()}`,
+        cover_image_url: `https://images.unsplash.com/photo-${faker.number.int({ min: 1000, max: 2000 })}?auto=format&fit=crop&w=800&q=80`,
+        rating: faker.number.int({ min: 1, max: 5 }),
+        rooms: {
+          create: [
+            { name: 'スタンダードルーム', capacity: 2, price_per_night: faker.number.int({ min: 8000, max: 20000 }) },
+            { name: 'デラックスルーム', capacity: 4, price_per_night: faker.number.int({ min: 25000, max: 50000 }) },
+          ],
         },
-    })
+      },
+    });
+  }
 
-    // 予約データ（空室/埋まりのテスト用）
-    await prisma.reservation.create({
-        data: {
-            user_id: user.id,
-            room_id: osakaHotel.rooms[0].id, // Osaka Single Room
-            guest_count: 1,
-            check_in: new Date("2026-05-10"),
-            check_out: new Date("2026-05-12"),
-            total_price: 24000,
-            status: "CONFIRMED",
-        },
-    })
-
-    await prisma.reservation.create({
-        data: {
-            user_id: user.id,
-            room_id: tokyoHotel.rooms[1].id, // Tokyo Double Room
-            guest_count: 2,
-            check_in: new Date("2026-05-11"),
-            check_out: new Date("2026-05-13"),
-            total_price: 80000,
-            status: "CONFIRMED",
-        },
-    })
-    
-    // キャンセル済み予約（空室判定テスト用）
-    await prisma.reservation.create({
-        data: {
-            user_id: user.id,
-            room_id: osakaHotel.rooms[0].id, // Osaka Single Room
-            guest_count: 1,
-            check_in: new Date("2026-06-01"),
-            check_out: new Date("2026-06-03"),
-            total_price: 24000,
-            status: "CANCELLED",
-        },
-    })
-
+  console.log(`完了！ 47都道府県に計${prefectures.length}軒のホテルを作成しました。`);
 }
 
 main()
-    .then(() =>{
-        console.log('完了')
-    })
-    .catch((e) => {
-        console.error(e)
-        process.exit(1)
-    })
-    .finally(async () => {
-        await prisma.$disconnect()
-    })
-    
+  .then(() => console.log('Seed成功！'))
+  .catch((e) => { console.error(e); process.exit(1); })
+  .finally(async () => { await prisma.$disconnect(); });

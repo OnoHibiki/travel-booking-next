@@ -7,7 +7,7 @@ type Props = {
 
 export function HotelCard({ hotel }: Props) {
     return (
-        <article className="rounded-lg border p-4 shadow-sm">
+        <article className="w-full min-w-0 rounded-lg border p-4 shadow-sm bg-white">
             <div className="mb-2">
                 <h2 className="text-xl font-bold">{hotel.name}</h2>
                 <p className="text-sm text-gray-600">{hotel.prefecture}</p>
@@ -18,7 +18,7 @@ export function HotelCard({ hotel }: Props) {
                 <p className="mb-2 text-sm text-gray-700">{hotel.address_line}</p>
             )}
             {hotel.description && (
-                <p className="mb-4 line-clamp-3 text-gray-800">{hotel.description}</p>
+                <p className="mb-4 line-clamp-3 text-gray-800 break-words">{hotel.description}</p>
             )}
 
             {/* ホテル詳細APIへ */}

@@ -29,7 +29,7 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="mb-8 rounded-lg border p-4 shadow-sm"
+            className="w-full mb-8 rounded-lg border p-4 shadow-sm"
         >
             <div className="grid gap-4 md:grid-cols-4">
                 <div className="flex flex-col gap-2">
