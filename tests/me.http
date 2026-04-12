@@ -1,0 +1,60 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImRvdWJsZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTk3OTg5NSwiZXhwIjoxNzc1OTgzNDk1fQ.QTNvus3jWJRyG3keHvIDu8CqWCM97ylY0vOzkgxNpCA
+
+### =========================
+### GET /me（正常）
+### =========================
+GET http://localhost:3000/api/me
+Authorization: Bearer {{token}}
+
+### GET /me（トークンなし）
+GET http://localhost:3000/api/me
+
+### GET /me（不正トークン）
+GET http://localhost:3000/api/me
+Authorization: Bearer invalid-token
+
+### =========================
+### PATCH /me（正常）
+### =========================
+PATCH http://localhost:3000/api/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated User",
+  "prefecture": "東京都"
+}
+
+### PATCH /me（email変更）
+PATCH http://localhost:3000/api/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "new@example.com"
+}
+
+### PATCH /me（email形式エラー）
+PATCH http://localhost:3000/api/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "invalid-email"
+}
+
+### PATCH /me（email重複）
+PATCH http://localhost:3000/api/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "ouble@example.com"
+}
+
+### PATCH /me（データなし）
+PATCH http://localhost:3000/api/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{}

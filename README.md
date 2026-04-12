@@ -31,3 +31,8 @@ A full-stack travel booking web application.
 ## Project status
  - プロジェクトスタート！: 2026/03/31
  - 環境構築完了！： 2026/4/3
+ - API（auth(register/login), me ）実装完了：2026/4/5
+ - API（hotels（空室検索対応）, rooms）実装完了：2026/4/6
+ - API(rooms(空室検索対応)) 実装完了：2026/4/7
+ - API(reservations)　実装完了　: 2026/4/9
+ - API(reservation/cancelなど) 実装完了 => フロントへ : 2026/4/12 
