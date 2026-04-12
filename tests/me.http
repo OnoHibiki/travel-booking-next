@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTM3OTgwOCwiZXhwIjoxNzc1MzgzNDA4fQ.fKRoXNgFKBVI31POBCL6WgXxf_GUtocxVKW6kDKu838
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImRvdWJsZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTk3NDk5MCwiZXhwIjoxNzc1OTc4NTkwfQ.agtmXLX0Zj3Bne9VRwFKVHnygFrSQ69DgxiFxwNjsK8
 
 ### =========================
 ### GET /me（正常）
@@ -12,6 +12,12 @@ GET http://localhost:3000/api/me
 ### GET /me（不正トークン）
 GET http://localhost:3000/api/me
 Authorization: Bearer invalid-token
+
+### =========================
+### GET /me/reservatoins (予約一覧取得)
+### =========================
+GET http://localhost:3000/api/me/reservations
+Authorization: Bearer {{token}}
 
 
 ### =========================

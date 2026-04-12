@@ -7,11 +7,13 @@ async function main() {
     await prisma.reservation.deleteMany()
     await prisma.room.deleteMany()
     await prisma.hotel.deleteMany()
-    await prisma.user.deleteMany()
 
     //テストユーザ
-    const user = await prisma.user.create({
-        data: {
+    const user = await prisma.user.upsert({
+        where: { email: 'test@example.com' },
+        update: {}, // すでにある場合は何もしない
+        create: {
+            id: 1,  // ★ここが重要！IDを1に固定
             name: 'Hibiki Ono',
             prefecture: '大阪府',
             password_hash: 'hashpassword',
@@ -33,11 +35,13 @@ async function main() {
             rooms: {
                 create: [
                     {
+                        id: 1,
                         name: 'Single Room',
                         capacity: 1,
                         price_per_night: 12000,
                     },
                     {
+                        id: 2,
                         name: 'Double Room',
                         capacity: 2,
                         price_per_night: 20000,
@@ -61,11 +65,13 @@ async function main() {
             rooms: {
                 create: [
                     {
+                        id: 3,
                         name: 'Single Room',
                         capacity: 1,
                         price_per_night: 22000,
                     },
                     {
+                        id: 4,
                         name: 'Double Room',
                         capacity: 2,
                         price_per_night: 40000,

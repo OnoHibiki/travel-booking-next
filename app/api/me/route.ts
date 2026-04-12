@@ -59,7 +59,7 @@ export async function GET(req: Request) {
     }
 }
 
-// ユーザ情報更新
+// 予約一覧取得
 export async function PATCH(req: Request) {
     try {
         // Authorizationヘッダー取得
