@@ -13,7 +13,7 @@ async function main() {
         where: { email: 'test@example.com' },
         update: {}, // すでにある場合は何もしない
         create: {
-            id: 1,  // ★ここが重要！IDを1に固定
+            id: 1,  // テスト用のため固定ID
             name: 'Hibiki Ono',
             prefecture: '大阪府',
             password_hash: 'hashpassword',
