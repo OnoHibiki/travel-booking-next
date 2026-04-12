@@ -37,3 +37,4 @@ A full-stack travel booking web application.
  - API(rooms(空室検索対応)) 実装完了：2026/4/7
  - API(reservations)　実装完了　: 2026/4/9
  - API(reservation/cancelなど) 実装完了 => フロントへ : 2026/4/12 
+ - ホテル検索画面　実装完了 : 2026/4/12
