@@ -14,6 +14,7 @@ A full-stack travel booking web application.
 ### Frontend
 - React
 - TypeScript
+- tailwind CSS
 
 ## Database Design
 ![ER Diagram](./docs/erd.png)
