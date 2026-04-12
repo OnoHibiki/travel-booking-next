@@ -69,24 +69,26 @@ export default function Home() {
 
   // ここからHTML
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
-      <section className="mb-8">
+    <main className="mx-auto w-full max-w-5xl px-4 py-8 flex flex-col items-stretch gap-8">
+      <section className="w-full">
         <h1 className="mb-2 text-3xl font-bold">旅行先を検索</h1>
         <p className="text-gray-600">
           都道府県と宿泊日を指定して、ホテルを検索できます。
         </p>
       </section>
 
-      <HotelSearchForm
-        initialValues={{
-          prefecture,
-          checkIn,
-          checkOut,
-        }}
-        onSearch={handleSearch}
-      />
-
-      <section>
+      <div className="w-full">
+        <HotelSearchForm
+          initialValues={{
+            prefecture,
+            checkIn,
+            checkOut,
+          }}
+          onSearch={handleSearch}
+        />
+      </div>
+      
+      <section className="w-full">
         <h2 className="mb-4 text-2xl font-semibold">ホテル一覧</h2>
         
         {/* Trueの時だけ */}

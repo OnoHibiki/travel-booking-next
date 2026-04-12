@@ -8,14 +8,14 @@ type Props = {
 export function HotelList({ hotels }: Props) {
     if(hotels.length === 0) {
         return (
-            <div className="rounded-lg border border-dashed p-8 text-center text-gray-600">
+            <div className="w-full rounded-lg border border-dashed p-8 text-center text-gray-600">
                 条件に一致するホテルが見つかりませんでした。
             </div>
         );
     }
 
     return (
-        <div className="grid gap-4">
+        <div className="grid w-full grid-cols-1 gap-4">
             {hotels.map((hotel) => (
                 <HotelCard key={hotel.id} hotel={hotel} />
             ))}
