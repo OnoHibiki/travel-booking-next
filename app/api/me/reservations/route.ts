@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient()
@@ -34,7 +34,14 @@ export async function GET(req: Request) {
         }
 
         // JWT検証してpayloadを取得
-        const decoded = jwt.verify(token, secret) as JwtPayload
+        let decoded: JwtPayload;
+        try {
+            decoded = jwt.verify(token, secret) as JwtPayload;
+        } catch {
+            return NextResponse.json(
+                { error: '認証に失敗しました' }, { status: 401 }
+            );
+        }
 
         const reservations = await prisma.reservation.findMany({
             where: {
