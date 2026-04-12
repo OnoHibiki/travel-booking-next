@@ -19,7 +19,8 @@ function buildQuery(params: GetHotelsParams): string {
     return queryString ? `?${queryString}` : "";
 }
 
-export async function getHotels(params: GetHotelsParams): Promise<Hotel[]> {
+// デフォルトで全件検索
+export async function getHotels(params: GetHotelsParams = {}): Promise<Hotel[]> {
     const query = buildQuery(params);
     return apiClient.get<Hotel[]>(`/api/hotels${query}`);
 }
