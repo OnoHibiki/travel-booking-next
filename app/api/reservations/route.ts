@@ -24,7 +24,7 @@ export async function POST(req: Request){
 
         if(!secret) {
             return NextResponse.json(
-                { error: 'JWT_SECRETが設定されていません' }, { status: 500}
+                { error: 'JWT_SECRETが設定されていません' }, { status: 500 }
             );
         }
 

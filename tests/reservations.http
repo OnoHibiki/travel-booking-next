@@ -1,7 +1,6 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksImVtYWlsIjoiZG91YmxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc1NzQ0NjQ1LCJleHAiOjE3NzU3NDgyNDV9.iVkWvfSW9oDxPGQL_iJ3zopRzZ3FxhCx45Qdc0FvOVM
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImRvdWJsZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTk3NDk5MCwiZXhwIjoxNzc1OTc4NTkwfQ.agtmXLX0Zj3Bne9VRwFKVHnygFrSQ69DgxiFxwNjsK8
 ### =========================
-### POST /reservations
+### POST /reservations(予約登録)
 ### =========================
 
 ### 1. 正常
@@ -10,7 +9,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "room_id": 22,
+  "room_id": 2,
   "check_in": "2026-05-29",
   "check_out": "2026-05-30",
   "guest_count": 2
