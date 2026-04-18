@@ -49,7 +49,7 @@ export default function HotelDetailPage() {
             <p className="text-gray-600 mb-6">{hotel.prefecture}</p>
             <section>
                 <h2 className="text-2xl font-semibold mb-4">部屋一覧</h2>
-                <RoomList rooms={rooms} />
+                <RoomList rooms={rooms} checkIn={checkIn} checkOut={checkOut} />
             </section>
         </main>
     )

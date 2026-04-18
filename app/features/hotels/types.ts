@@ -13,7 +13,7 @@ export type Hotel = {
 export type Room = {
   id: number;
   name: string;
-  price: number;
+  price_per_night: number;
   capacity: number;
   is_available: boolean | null;
 };
