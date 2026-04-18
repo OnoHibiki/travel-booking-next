@@ -3,9 +3,24 @@ import type { Hotel } from "@/app/features/hotels/types"
 
 type Props = {
   hotel: Hotel;
+  checkIn?: string;
+  checkOut?: string;
 };
 
-export function HotelCard({ hotel }: Props) {
+export function HotelCard({ hotel, checkIn, checkOut }: Props) {
+    const searchParams = new URLSearchParams();
+
+    if(checkIn) {
+        searchParams.set("checkIn", checkIn);
+    }
+    if(checkOut) {
+        searchParams.set("checkOut", checkOut);
+    }
+
+    // 日付パラメータあったらそのまま渡す
+    const queryString = searchParams.toString();
+    const hotelDetailHref = queryString ? `/hotels/${hotel.id}?${queryString}` : `/hotels/${hotel.id}`;
+
     return (
         <article className="w-full min-w-0 rounded-lg border p-4 shadow-sm bg-white">
             <div className="mb-2">
@@ -23,7 +38,7 @@ export function HotelCard({ hotel }: Props) {
 
             {/* ホテル詳細APIへ */}
             <Link 
-                href={`/hotels/${hotel.id}`}
+                href={hotelDetailHref}
                 className="inline-block rounded-md border px-4 text-sm font-medium hover:bg-gray-50"
             >
                 詳細を見る
