@@ -23,6 +23,8 @@ export default function LoginPage() {
             const data = await login(values);
 
             localStorage.setItem("accessToken", data.token);
+            router.push(redirect);
+            router.refresh();
         } catch (error) {
             if(error instanceof Error) {
                 setErrorMessage("ログインに失敗しました");

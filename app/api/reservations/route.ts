@@ -9,6 +9,7 @@ type JwtPayload = {
     email: string
 }
 
+// 予約作成
 export async function POST(req: Request){
     try {
         const authHeader = req.headers.get('authorization')
@@ -31,7 +32,8 @@ export async function POST(req: Request){
         let decoded: JwtPayload;
         try {
             decoded = jwt.verify(token, secret) as JwtPayload;
-        } catch {
+        } catch (err) {
+            console.error(err);
             return NextResponse.json(
                 { error: '認証に失敗しました' }, { status: 401 }
             );
