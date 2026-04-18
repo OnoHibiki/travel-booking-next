@@ -1,12 +1,5 @@
 import { apiClient } from "@/app/lib/api/client";
-
-export type Room = {
-    id: number;
-    name: string;
-    price: number;
-    capacity: number;
-    is_available: boolean | null;
-};
+import { Room } from "@/app/features/hotels/types";
 
 type Params = {
     hotelId: string;

@@ -1,10 +1,13 @@
-import type { Room } from "@/app/features/hotels/api/get-hotel-rooms";
+import { Room } from "@/app/features/hotels/types";
+import { ReserveRoomButton } from "./reserve-room-button";
 
 type Props = {
     room: Room;
+    checkIn?: string;
+    checkOut?: string;
 };
 
-export function RoomCard({ room }: Props) {
+export function RoomCard({ room, checkIn, checkOut }: Props) {
     const getStatus = () => {
         if(room.is_available === null) return '日付未指定';
         if(room.is_available) return '予約可能';
@@ -26,12 +29,20 @@ export function RoomCard({ room }: Props) {
             </p>
 
             <p className="text-sm text-gray-600">
-                料金: ¥{room.price.toLocaleString()}
+                料金: ¥{room.price_per_night.toLocaleString()}
             </p>
 
             <p className={`mt-2 font-semibold ${getColor()}`}>
                 {getStatus()}
             </p>
+
+            {room.is_available === true && checkIn && checkOut && (
+                <ReserveRoomButton
+                    roomId={room.id}
+                    checkIn={checkIn}
+                    checkOut={checkOut}
+                />
+            )}
         </div>
     );
 }
