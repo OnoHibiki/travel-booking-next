@@ -9,6 +9,15 @@ export type Hotel = {
     rating: number | null; 
 };
 
+// 部屋型定義
+export type Room = {
+  id: number;
+  name: string;
+  price: number;
+  capacity: number;
+  is_available: boolean | null;
+};
+
 export type GetHotelsParams = {
     prefecture?: string;
     checkIn?: string;
