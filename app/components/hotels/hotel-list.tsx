@@ -3,9 +3,11 @@ import { HotelCard } from "./hotel-card";
 
 type Props = {
     hotels: Hotel[];
+    checkIn?: string;
+    chekcOut?: string;
 };
 
-export function HotelList({ hotels }: Props) {
+export function HotelList({ hotels, checkIn, chekcOut }: Props) {
     if(hotels.length === 0) {
         return (
             <div className="w-full rounded-lg border border-dashed p-8 text-center text-gray-600">
@@ -17,7 +19,12 @@ export function HotelList({ hotels }: Props) {
     return (
         <div className="grid w-full grid-cols-1 gap-4">
             {hotels.map((hotel) => (
-                <HotelCard key={hotel.id} hotel={hotel} />
+                <HotelCard 
+                    key={hotel.id}
+                    hotel={hotel}
+                    checkIn={checkIn}
+                    checkOut={chekcOut}
+                />
             ))}
         </div>
     );

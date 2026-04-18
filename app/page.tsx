@@ -102,7 +102,7 @@ export default function Home() {
         )}
 
         {/* エラーが出なかったら、一覧表示 */}
-        {!isLoading && !errorMessage && <HotelList hotels={hotels} />}
+        {!isLoading && !errorMessage && <HotelList hotels={hotels} checkIn={checkIn} chekcOut={checkOut} />}
       </section>
     </main>
   )
