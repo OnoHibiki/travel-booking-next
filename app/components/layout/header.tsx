@@ -41,12 +41,22 @@ export function Header() {
 
                 {user ? (
                     <div className="flex items-center gap-3 text-sm">
-                        <Link href="/me" className="hover:underline">ようこそ {user.name} さま</Link>
-                        <button
-                        onClick={handleLogout}
-                        className="rounded-md border px-3 py-1 hover:bg-gray-100"
+                        <Link href="/me" className="hover:underline">
+                            ようこそ {user.name} さま
+                        </Link>
+
+                        <Link
+                            href="/reservations"
+                            className="rounded-md border px-3 py-1 hover:bg-gray-100"
                         >
-                        ログアウト
+                            予約一覧
+                        </Link>
+
+                        <button
+                            onClick={handleLogout}
+                            className="rounded-md border px-3 py-1 hover:bg-gray-100"
+                        >
+                            ログアウト
                         </button>
                     </div>
                 ) : (
