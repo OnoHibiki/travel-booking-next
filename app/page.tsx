@@ -95,24 +95,6 @@ export default function Home() {
         </p>
       </section>
 
-      <div>
-        {AuthUser ? (
-          <Link
-            href="/reservations"
-            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50"
-          >
-            {AuthUser.name} さん
-          </Link>
-        ) : (
-          <Link
-            href="/login"
-            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50"
-          >
-            ログインへ
-          </Link>
-        )}
-      </div>
-
       <div className="w-full">
         <HotelSearchForm
           initialValues={{
