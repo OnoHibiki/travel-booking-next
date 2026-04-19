@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReservationForm } from "@/app/components/reservation-form";
 import { createReservation } from "@/app/features/reservations/api/create-reservation";
-import { error } from "console";
 
 export default function NewReservationPage() {
     const router = useRouter();

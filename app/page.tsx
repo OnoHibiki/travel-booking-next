@@ -6,6 +6,9 @@ import { HotelSearchForm } from "@/app/components/hotels/hotel-search-form";
 import { HotelList } from "@/app/components/hotels/hotel-list";
 import { getHotels } from "@/app/features/hotels/api/get-hotels";
 import type { GetHotelsParams, Hotel } from "@/app/features/hotels/types";
+import Link from "next/link";
+import { getMe } from "@/app/features/auth/api/get-me";
+import type { AuthUser } from "@/app/features/auth/types";
 
 export default function Home() {
   const router = useRouter();
@@ -18,6 +21,21 @@ export default function Home() {
   const prefecture = searchParams.get("prefecture") ?? "";
   const checkIn = searchParams.get("checkIn") ?? "";
   const checkOut = searchParams.get("checkOut") ?? "";
+
+  const [AuthUser, setUser] = useState<AuthUser | null>(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("accessToken");
+      if(!token) return;
+      try {
+        const data = await getMe(token);
+        setUser(data);
+      } catch {
+        localStorage.removeItem("accessToken");
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -77,6 +95,24 @@ export default function Home() {
         </p>
       </section>
 
+      <div>
+        {AuthUser ? (
+          <Link
+            href="/reservations"
+            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50"
+          >
+            {AuthUser.name} さん
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50"
+          >
+            ログインへ
+          </Link>
+        )}
+      </div>
+
       <div className="w-full">
         <HotelSearchForm
           initialValues={{
@@ -87,6 +123,7 @@ export default function Home() {
           onSearch={handleSearch}
         />
       </div>
+      
       
       <section className="w-full">
         <h2 className="mb-4 text-2xl font-semibold">ホテル一覧</h2>
@@ -102,7 +139,7 @@ export default function Home() {
         )}
 
         {/* エラーが出なかったら、一覧表示 */}
-        {!isLoading && !errorMessage && <HotelList hotels={hotels} checkIn={checkIn} chekcOut={checkOut} />}
+        {!isLoading && !errorMessage && <HotelList hotels={hotels} checkIn={checkIn} checkOut={checkOut} />}
       </section>
     </main>
   )

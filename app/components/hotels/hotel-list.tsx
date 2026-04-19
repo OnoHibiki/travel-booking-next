@@ -4,10 +4,10 @@ import { HotelCard } from "./hotel-card";
 type Props = {
     hotels: Hotel[];
     checkIn?: string;
-    chekcOut?: string;
+    checkOut?: string;
 };
 
-export function HotelList({ hotels, checkIn, chekcOut }: Props) {
+export function HotelList({ hotels, checkIn, checkOut }: Props) {
     if(hotels.length === 0) {
         return (
             <div className="w-full rounded-lg border border-dashed p-8 text-center text-gray-600">
@@ -23,7 +23,7 @@ export function HotelList({ hotels, checkIn, chekcOut }: Props) {
                     key={hotel.id}
                     hotel={hotel}
                     checkIn={checkIn}
-                    checkOut={chekcOut}
+                    checkOut={checkOut}
                 />
             ))}
         </div>
