@@ -1,9 +1,6 @@
 ## Endpoints
 
 ### Hotels / Rooms
-- `GET /hotels?prefecture=大阪府`
-    - 説明: 都道府県でホテル一覧を取得　(指定せず検索した場合は、全件)
-    - 認証: 不要
 
 - `GET /hotels?prefecture=大阪府&checkIn=YYYY-MM-DD&checkOut=YYYY-MM-DD`
     - 説明: 都道府県と日付で空室ホテルを検索

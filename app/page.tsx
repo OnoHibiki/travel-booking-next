@@ -6,7 +6,6 @@ import { HotelSearchForm } from "@/app/components/hotels/hotel-search-form";
 import { HotelList } from "@/app/components/hotels/hotel-list";
 import { getHotels } from "@/app/features/hotels/api/get-hotels";
 import type { GetHotelsParams, Hotel } from "@/app/features/hotels/types";
-import Link from "next/link";
 import { getMe } from "@/app/features/auth/api/get-me";
 import type { AuthUser } from "@/app/features/auth/types";
 
@@ -39,6 +38,12 @@ export default function Home() {
 
   useEffect(() => {
     const fetchHotels = async () => {
+      if (!prefecture || !checkIn || !checkOut) { // 全ての検索条件が必要
+        setHotels([]);
+        setErrorMessage("");
+        setIsLoading(false);
+        return;
+      }
       try {
         setIsLoading(true);
         setErrorMessage("");
@@ -109,19 +114,24 @@ export default function Home() {
       
       <section className="w-full">
         <h2 className="mb-4 text-2xl font-semibold">ホテル一覧</h2>
-        
-        {/* Trueの時だけ */}
-        {isLoading && <p className="text-gray-600">読み込み中...</p>}
+        {!prefecture || !checkIn || !checkOut ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-gray-600">
+            都道府県・チェックイン・チェックアウトを入力して検索してください。
+          </div>
+        ) : null}
+        {prefecture && checkIn && checkOut && isLoading && (
+          <p className="text-gray-600">読み込み中...</p>
+        )}
 
-        {/* エラー時 */}
-        {!isLoading && errorMessage && (
+        {prefecture && checkIn && checkOut && !isLoading && errorMessage && (
           <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
             {errorMessage}
           </div>
         )}
 
-        {/* エラーが出なかったら、一覧表示 */}
-        {!isLoading && !errorMessage && <HotelList hotels={hotels} checkIn={checkIn} checkOut={checkOut} />}
+        {prefecture && checkIn && checkOut && !isLoading && !errorMessage && (
+          <HotelList hotels={hotels} checkIn={checkIn} checkOut={checkOut} />
+        )}
       </section>
     </main>
   )
