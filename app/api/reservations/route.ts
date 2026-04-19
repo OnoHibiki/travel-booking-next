@@ -9,6 +9,7 @@ type JwtPayload = {
     email: string
 }
 
+// 予約作成
 export async function POST(req: Request){
     try {
         const authHeader = req.headers.get('authorization')
@@ -31,7 +32,8 @@ export async function POST(req: Request){
         let decoded: JwtPayload;
         try {
             decoded = jwt.verify(token, secret) as JwtPayload;
-        } catch {
+        } catch (err) {
+            console.error(err);
             return NextResponse.json(
                 { error: '認証に失敗しました' }, { status: 401 }
             );
@@ -212,13 +214,16 @@ export async function GET(req: Request) {
             guest_count: r.guest_count,
             total_price: r.total_price,
             status: r.status,
+            hotel: {
+                id: r.room.hotel.id,
+                name: r.room.hotel.name,
+                prefecture: r.room.hotel.prefecture,
+            },
             room: {
                 id: r.room.id,
                 name: r.room.name,
-                hotel: {
-                    id: r.room.hotel_id,
-                    name: r.room.hotel.name,
-                },
+                price: r.room.price_per_night,
+                capacity: r.room.capacity,
             },
         }));
 

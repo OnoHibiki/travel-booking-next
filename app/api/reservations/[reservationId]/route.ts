@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient, ReservationStatus } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient()
@@ -84,13 +84,16 @@ export async function GET(
             guest_count: reservation.guest_count,
             total_price: reservation.total_price,
             status: reservation.status,
+            hotel: {
+                id: reservation.room.hotel.id,
+                name: reservation.room.hotel.name,
+                prefecture: reservation.room.hotel.prefecture,
+            },
             room: {
                 id: reservation.room.id,
                 name: reservation.room.name,
-                hotel: {
-                    id: reservation.room.hotel.id,
-                    name: reservation.room.hotel.name,
-                },
+                price: reservation.room.price_per_night,
+                capacity: reservation.room.capacity,
             },
         };
 
