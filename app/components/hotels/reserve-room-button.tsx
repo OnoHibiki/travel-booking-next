@@ -22,7 +22,7 @@ export function ReserveRoomButton({ roomId, checkIn, checkOut }: Props) {
             checkOut,
         });
 
-        const reservationPath = `/reservations/new?${reservationParams.toString()}`;
+        const reservationPath = `/reservations/register?${reservationParams.toString()}`;
 
         const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null ;
         

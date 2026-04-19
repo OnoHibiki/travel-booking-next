@@ -35,7 +35,7 @@ export function Header() {
     return (
         <header className="border-b bg-white">
             <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 ">
-                <Link href="/" className="text-xl font-bold hover:bg-red-300">
+                <Link href="/" className="text-xl font-bold hover:text-red-700">
                     尾野トラベル
                 </Link>
 

@@ -13,15 +13,22 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
     const [prefecture, setPrefecture] = useState(initialValues?.prefecture ?? "");
     const [checkIn, setCheckIn] = useState(initialValues?.checkIn ?? "");
     const [checkOut, setCheckOut] = useState(initialValues?.checkOut ?? "");
-
+    const [errorMessage, setErrorMessage] = useState("")
     // 非推奨らしいけど、そのまま行きます
+    
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
+        if(!prefecture || !checkIn || !checkOut) {
+            setErrorMessage("都道府県・チェックイン・チェックアウトをすべて入力してください。");
+            return;
+        }
+
+        setErrorMessage("");
 
         onSearch({
-            prefecture: prefecture || undefined,
-            checkIn: checkIn || undefined,
-            checkOut: checkOut || undefined,
+            prefecture: prefecture,
+            checkIn: checkIn,
+            checkOut: checkOut,
         });
     };
 
@@ -31,6 +38,12 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
             onSubmit={handleSubmit}
             className="w-full mb-8 rounded-lg border p-4 shadow-sm"
         >
+            {errorMessage && (
+                <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                    {errorMessage}
+                </div>
+            )}
+
             <div className="grid gap-4 md:grid-cols-4">
                 <div className="flex flex-col gap-2">
                     <label htmlFor="prefecture" className="text-sm font-medium">
@@ -40,9 +53,10 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
                         id="prefecture"
                         value={prefecture}
                         onChange={(e) => setPrefecture(e.target.value)}
-                        className="rounded-mb border px-3 py-2"
+                        className="rounded-md border px-3 py-2"
+                        required
                     >
-                        <option value="">指定なし</option>
+                        <option value="">選択してください</option>
                         {PREFECTURES.map((item) => (
                             <option key={item} value={item}>
                             {item}
@@ -60,7 +74,8 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
                         type="date"
                         value={checkIn}
                         onChange={(e) => setCheckIn(e.target.value)} 
-                        className="rounded-mb border px-3 py-2"
+                        className="rounded-md border px-3 py-2"
+                        required
                     />
                 </div>
 
@@ -73,7 +88,8 @@ export function HotelSearchForm({ initialValues, onSearch }: Props) {
                         type="date"
                         value={checkOut}
                         onChange={(e) => setCheckOut(e.target.value)} 
-                        className="rounded-mb border px-3 py-2"
+                        className="rounded-md border px-3 py-2"
+                        required
                     />
                 </div>
 
